@@ -33,8 +33,7 @@ const intervalo = setInterval(() => {
 
   if (contador === 0) {
     countdown.innerText =contador;
-        clearInterval(intervalo);
-        resultado() // Detener el setInterval
+        clearInterval(intervalo); // Detener el setInterval
   }
 
   contador--;
@@ -46,6 +45,7 @@ const intervalo = setInterval(() => {
 userInput.addEventListener("change",()=>{
 contadorReverso()
 numerousuario = userInput.value
+resultado()
 }
 )
 //--------------------------1.2-----------------------------//
@@ -56,16 +56,7 @@ function resultado(){
 const numeroaleatorio5s = new Promise(resolve =>{
     setTimeout(()=>{
         resolve(numAleatorio())
-    },0)
-    
-})
- console.log(numeroaleatorio5s)// DA TRAS 5 sEG
-// Promise [[Prototype]] : 
-// Promise[[PromiseState]] :  "fulfilled" [[PromiseResult]] :  1 <--- EL UNO ES EL NUMERO ALEATORIO
-return numeroaleatorio5s
-}
-// FUNCION DEL PROFE QUE HACE QUE CUANDO TENGAMOS UN NUMERO lo compara
-resultado().then(number=>{
+        resultado().then(number=>{
     let mensaje = ""
     if (number == numerousuario){
         mensaje=`<h2>HAS DESACTIVADO LA BOMBA</h2><p>Has ELEGIDO EL CABLE NUMERO :${numerousuario}</p><p>EL CABLE BOMBA ERA EL:${number}</p>`
@@ -77,12 +68,23 @@ resultado().then(number=>{
 }
 
 )
+    },5000)
+    
+})
+ console.log(numeroaleatorio5s)// DA TRAS 5 sEG
+// Promise [[Prototype]] : 
+// Promise[[PromiseState]] :  "fulfilled" [[PromiseResult]] :  1 <--- EL UNO ES EL NUMERO ALEATORIO
+return numeroaleatorio5s
+}
+// FUNCION DEL PROFE QUE HACE QUE CUANDO TENGAMOS UN NUMERO lo comparaw22222
 
 
-//--->PROBANDO SI VA EN OTRO LADO resultado()
+
+
 //---- BOTON RESTART----//
 restart.addEventListener("click", () => {
   location.reload()
 })
 
 // LA FUNCION NOS DEVUELVE EL NUMERO ALEATORIO tras 5 SEG
+
