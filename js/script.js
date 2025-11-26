@@ -6,85 +6,59 @@
 // 4. Después de la cuenta atrás, el juego evaluará el número introducido. --- > COMPARAR LOS NUMEROS Y DECIR SI SON IGUALES O NO
 // 5. Se mostrará un mensaje indicando si has salvado el mundo o si la bomba ha estallado.
 
+const userInput = document.getElementById("userInput");
+const countdown = document.getElementById("countdown");
+const result = document.getElementById("result");
+const restart = document.getElementById("restart");
 
-const userInput = document.getElementById("userInput")
-const countdown = document.getElementById("countdown")
-const result = document.getElementById("result")
-const restart = document.getElementById("restart")
+let numerousuario = 0;
 
+function numAleatorio() {
+  return Math.floor(Math.random() * 3) + 1;
+}
 
+function contadorReverso() {
+  let contador = 5;
+  countdown.innerText = contador;
+  const intervalo = setInterval(() => {
+    contador--;
+    countdown.innerText = contador;
+    if (contador === 0) {
+      clearInterval(intervalo);
+      resultado();
+    }
+  }, 1000);
+}
 
-//1-1 - CREAMOS EL CONTADOR DE TIEMPO
-//1-2 - esto SE TIENE QUE DISPARAR CUANDO ELIGAMOS NUMERO ASI K  TIENE QUE SER UN FUNCION EN EL LIST EVENT DE USER IMPUT.
-//1-3 ya TENEMOS EL CONTADOR LLAMADO CONTADOR REVERSOL PARA LLAMARLO DENTRO DE LA FUNCION QUE ELIGE EL NUMERO,
+userInput.addEventListener("change", () => {
+  numerousuario = parseInt(userInput.value, 10);
+  // iniciar la cuenta atrás solo si el número es válido
+  if (numerousuario >= 1 && numerousuario <= 3) {
+    resultado.innerHTML = ""; // limpiar resultado previo
+    contadorReverso();
+  } else {
+    alert("Por favor introduce un número entre 1 y 3");
+  }
+});
 
-// 1-4 VAMOA CREAR EL NUMERO ALEATORIO
-/////////////////////1.4-//////////////////////////////////
+function resultado() {
+  const number = numAleatorio(); // número aleatorio del juego
+  let mensaje = "";
 
-let numAleatorio =() => Math.floor((Math.random()*3)+1)
-let numerousuario = 0
-/////------------1.4----------------------//////
-
-//-------------1.1---------------//
-function contadorReverso(){
- let contador = 5;
-const intervalo = setInterval(() => {
-  countdown.innerText =contador
-
-  if (contador === 0) {
-    countdown.innerText =contador;
-        clearInterval(intervalo); // Detener el setInterval
+  if (number === numerousuario) {
+    mensaje = `<h2>¡HAS DESACTIVADO LA BOMBA!</h2>
+               <p>Has elegido el cable número: ${numerousuario}</p>
+               <p>El cable bomba era el: ${number}</p>`;
+  } else {
+    mensaje = `<h2>BOOM!!! CABLE EQUIVOCADO</h2>
+               <p>Has elegido el cable número: ${numerousuario}</p>
+               <p>El cable bomba era el: ${number}</p>`;
   }
 
-  contador--;
-}, 1000); // 1000 ms = 1 segundo
-}
-//------------1.1-----------------//
-
-//------------1.2 = cuando eligamos se ejecuta el contador, seleccionamos el numero de usuario
-userInput.addEventListener("change",()=>{
-contadorReverso()
-numerousuario = userInput.value
-resultado()
-}
-)
-//--------------------------1.2-----------------------------//
-
-//--------------------------1.5 FUNCION RESULTADO, ya el contaddor esta a 0 , tenemos el n.aleat, y mi numero ---//
-
-function resultado(){
-const numeroaleatorio5s = new Promise(resolve =>{
-    setTimeout(()=>{
-        resolve(numAleatorio())
-        resultado().then(number=>{
-    let mensaje = ""
-    if (number == numerousuario){
-        mensaje=`<h2>HAS DESACTIVADO LA BOMBA</h2><p>Has ELEGIDO EL CABLE NUMERO :${numerousuario}</p><p>EL CABLE BOMBA ERA EL:${number}</p>`
-    }
-    else{
-        mensaje=`<h2>BOOM!!! CABLE EQUIVOCADO</h2><p>Has ELEGIDO EL CABLE NUMERO :${numerousuario}</p><p>EL CABLE BOMBA ERA EL:${number}</p>`
-    }
-    result.innerHTML =  mensaje
+  result.innerHTML = mensaje;
 }
 
-)
-    },5000)
-    
-})
- console.log(numeroaleatorio5s)// DA TRAS 5 sEG
-// Promise [[Prototype]] : 
-// Promise[[PromiseState]] :  "fulfilled" [[PromiseResult]] :  1 <--- EL UNO ES EL NUMERO ALEATORIO
-return numeroaleatorio5s
-}
-// FUNCION DEL PROFE QUE HACE QUE CUANDO TENGAMOS UN NUMERO lo comparaw22222
-
-
-
-
-//---- BOTON RESTART----//
+// Reiniciar juego
 restart.addEventListener("click", () => {
-  location.reload()
-})
-
-// LA FUNCION NOS DEVUELVE EL NUMERO ALEATORIO tras 5 SEG
-
+  location.reload();
+});
